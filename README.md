@@ -52,7 +52,11 @@ conda activate myenv
 
 *Some information; CUDA (or Compute Unified Device Architecture) is a parallel computing platform and application programming interface (API) that allows software to use certain types of graphics processing units (GPUs) for general purpose processing, an approach called general-purpose computing on GPUs. cuDNN (CUDA Deep Neural Network library) on the other hand is a GPU-accelerated library of primitives for deep neural networks. To setup our environment we will need both CUDA and cuDNN.*
 
-Before you get started, make sure you have the latest drivers for your GPU. I like keeping my drivers up to date with [GeForce Experience](https://www.nvidia.com/sv-se/geforce/geforce-experience/)
+First make sure you have the latest drivers for your GPU. I like keeping my drivers up to date with [GeForce Experience](https://www.nvidia.com/sv-se/geforce/geforce-experience/)
+
+Secondly, Download and install the latest version of [Visual Studio Community](https://visualstudio.microsoft.com/vs/community/). This is because VS will also install many necessary dependencies. During the install when asked which components you want to add, just continue with the intall. You don't need any of those components, you only need the core editor.
+
+![image](https://user-images.githubusercontent.com/5618925/183268745-dd264c0f-a2d1-41dc-9a6c-8aeba0079b91.png)
 
 First you must find out which version of tensorflow you are using. Run
 ```bash
@@ -62,17 +66,34 @@ Look up tensorflow and see its version. For me it is 2.9.1. Then go to [this](ht
 
 <img src="https://user-images.githubusercontent.com/5618925/183267375-304c7564-6d35-48ae-9531-83a3d117de0c.png" width="600">
 
-[Here](https://developer.nvidia.com/cuda-toolkit-archive) you can find all CUDA versions. Note that you may need to create a free Nvidia developer account in order to access this page.
+[Here](https://developer.nvidia.com/cuda-toolkit-archive) you can find all CUDA versions.
 
 <img src="https://user-images.githubusercontent.com/5618925/183267431-b65124c3-0526-4bff-bc3d-9a181f53f065.png" width="600">
 
 Make sure to select your correct Windows version and choose installer type exe (local). Simply download the exe and install it on your system.
 
-Then download your compatible cuDNN version from [here](https://developer.nvidia.com/rdp/cudnn-archive).
+Then download your compatible cuDNN version from [here](https://developer.nvidia.com/rdp/cudnn-archive). To download cuDNN you will be asked to create an Nvidia account. Just make one, it is free.
 
 To install cuDNN, simply extract the contents of your cuDNN downloaded zip-file into the install folder of CUDA, which by default should be **C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\vX.X**. When prompted, select to replace existing files.
 
 ![image](https://user-images.githubusercontent.com/5618925/183267604-eaf6d9c1-3c9e-408e-abb9-12d79284c2ad.png)
+
+Now add the following folder paths to you PATH environment variable
+
+1. C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.7\bin
+2. C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.7\libnvvp
+
+Simply adjust these paths so they correspond with YOUR CUDA-version and install folder location. If you don't know how to edit your PATH environment variable you can read [this](https://helpdeskgeek.com/windows-10/add-windows-path-environment-variable/).
+
+Lastly open up your Anaconda prompt, make sure you are still in the myenv environment, and then run this command (replace PATH with your folder path to CUDA, like C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.7):
+
+```bash
+conda env config vars set XLA_FLAGS=--xla_gpu_cuda_data_dir="PATH"
+```
+Example:
+```bash
+conda env config vars set XLA_FLAGS=--xla_gpu_cuda_data_dir="C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.7"
+```
 
 
 ## **Step 3 - Start creating your dataset**
