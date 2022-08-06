@@ -41,11 +41,6 @@ Now install tensorflow
 pip install tensorflow
 ```
 
-intall miniconda
-create a conda enviroment
-pip install tensorflow
-conda activate myenv
-
 ## **Step 2 - Configure CUDA and cuDNN (optional but recommended)**
 
 **Training a machine learning model is a very resource intensive process that ideally requires a strong computer. This is why many perform this operation on a remote machine that is specifically equipped to handle these demanding operations. However in this tutorial we will do everything on the local computer, without any cloud services. It is generally recommended to perform the training phase using a GPU (graphics card). This tutorial is targeted towards using an Nvidia graphics card, which is why I use CUDA and cuDNN, which are Nvidia technologies. AMD have launched an equivalent technology called GPUFORT, but I have no experience with this. If you do not have a dedicated Nvidia graphics card on your computer (or simply feeling lazy and don't want to do this step) you can simply skip this step and go to [step 3](#step-3---start-creating-your-dataset), because it is possible to just use your CPU, but it is slower and not ideal. If you do have an Nvidia GPU however you can follow the these instructions setup your computer so that it is ready to train models using an Nvidia GPU.**
@@ -95,6 +90,84 @@ Example:
 conda env config vars set XLA_FLAGS=--xla_gpu_cuda_data_dir="C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.7"
 ```
 
+Close your Anaconda prompt and open it up again as administrator. This is because you need to restart your runtime in order to get all of the new environment variables that comes from the CUDA installation.
+
+Remember to activate your myenv environment.
+```bash
+conda activate myenv
+```
+Create a file called test.py and copy the following contents into this file:
+```python
+import os
+import tensorflow as tf
+from tensorflow import keras
+from tensorflow.keras import layers
+from tensorflow.keras.datasets import cifar10
+physical_devices = tf.config.list_physical_devices("GPU")
+tf.config.experimental.set_memory_growth(physical_devices[0], True)
+(x_train, y_train), (x_test, y_test) = cifar10.load_data()
+x_train = x_train.astype("float32") / 255.0
+x_test = x_test.astype("float32") / 255.0
+model = keras.Sequential(
+    [
+        keras.Input(shape=(32, 32, 3)),
+        layers.Conv2D(32, 3, padding="valid", activation="relu"),
+        layers.MaxPooling2D(),
+        layers.Conv2D(64, 3, activation="relu"),
+        layers.MaxPooling2D(),
+        layers.Conv2D(128, 3, activation="relu"),
+        layers.Flatten(),
+        layers.Dense(64, activation="relu"),
+        layers.Dense(10),
+    ]
+)
+def my_model():
+    inputs = keras.Input(shape=(32, 32, 3))
+    x = layers.Conv2D(32, 3)(inputs)
+    x = layers.BatchNormalization()(x)
+    x = keras.activations.relu(x)
+    x = layers.MaxPooling2D()(x)
+    x = layers.Conv2D(64, 3)(x)
+    x = layers.BatchNormalization()(x)
+    x = keras.activations.relu(x)
+    x = layers.MaxPooling2D()(x)
+    x = layers.Conv2D(128, 3)(x)
+    x = layers.BatchNormalization()(x)
+    x = keras.activations.relu(x)
+    x = layers.Flatten()(x)
+    x = layers.Dense(64, activation="relu")(x)
+    outputs = layers.Dense(10)(x)
+    model = keras.Model(inputs=inputs, outputs=outputs)
+    return model
+model = my_model()
+model.compile(
+    loss=keras.losses.SparseCategoricalCrossentropy(from_logits=True),
+    optimizer=keras.optimizers.Adam(lr=3e-4),
+    metrics=["accuracy"],
+)
+model.fit(x_train, y_train, batch_size=64, epochs=10, verbose=2)
+model.evaluate(x_test, y_test, batch_size=64, verbose=2)
+```
+Now run it
+```bash
+python test.py
+```
+
+You don't need to worry about what this file does, this is simply to check that tensorflow correctly recognizes and uses CUDA.
+
+What you want to check for is that it recognizes your GPU
+
+![image](https://user-images.githubusercontent.com/5618925/183269238-a22e8e77-80a8-4922-8e29-d695134aa4ba.png)
+
+and that cuDNN is loaded
+
+![image](https://user-images.githubusercontent.com/5618925/183269222-ac9d6083-18f6-47c1-b290-16f3a1e0b902.png)
+
+This means CUDA and cuDNN is configured correctly. Another easy way to check is to simply watch your GPU load in the Performance tab in Task Manager, it should be close to 100%.
+
+![image](https://user-images.githubusercontent.com/5618925/183269363-00bf8ecb-afcc-41f5-98b4-44f96de66985.png)
+
+You may now close the script with CTRL+C.
 
 ## **Step 3 - Start creating your dataset**
 
