@@ -46,7 +46,7 @@ create a conda enviroment
 pip install tensorflow
 conda activate myenv
 
-## **Step 2 - Configure CUDA and cuDNN**
+## **Step 2 - Configure CUDA and cuDNN (optional but recommended)**
 
 **Training a machine learning model is a very resource intensive process that ideally requires a strong computer. This is why many perform this operation on a remote machine that is specifically equipped to handle these demanding operations. However in this tutorial we will do everything on the local computer, without any cloud services. It is generally recommended to perform the training phase using a GPU (graphics card). This tutorial is targeted towards using an Nvidia graphics card, which is why I use CUDA and cuDNN, which are Nvidia technologies. AMD have launched an equivalent technology called GPUFORT, but I have no experience with this. If you do not have a dedicated Nvidia graphics card on your computer (or simply feeling lazy and don't want to do this step) you can simply skip this step and go to [step 3](#step-3---start-creating-your-dataset), because it is possible to just use your CPU, but it is slower and not ideal. If you do have an Nvidia GPU however you can follow the these instructions setup your computer so that it is ready to train models using an Nvidia GPU.**
 
@@ -58,7 +58,22 @@ First you must find out which version of tensorflow you are using. Run
 ```bash
 pip list tensorflow
 ```
-Look up tensorflow and see its version. For me it is 2.9.1. Then go to [this](https://www.tensorflow.org/install/source_windows#gpu) page. Here you can see which version of CUDA and cuDNN that are compatible with your 
+Look up tensorflow and see its version. For me it is 2.9.1. Then go to [this](https://www.tensorflow.org/install/source_windows#gpu) page. Here you can see which version of CUDA and cuDNN that are compatible with your Tensorflow version. I can see in this list that for Tensorflow version 2.9.x I need cuDNN 8.1+ and CUDA 11.2+.
+
+<img src="https://user-images.githubusercontent.com/5618925/183267375-304c7564-6d35-48ae-9531-83a3d117de0c.png" width="600">
+
+[Here](https://developer.nvidia.com/cuda-toolkit-archive) you can find all CUDA versions. Note that you may need to create a free Nvidia developer account in order to access this page.
+
+<img src="https://user-images.githubusercontent.com/5618925/183267431-b65124c3-0526-4bff-bc3d-9a181f53f065.png" width="600">
+
+Make sure to select your correct Windows version and choose installer type exe (local). Simply download the exe and install it on your system.
+
+Then download your compatible cuDNN version from [here](https://developer.nvidia.com/rdp/cudnn-archive).
+
+To install cuDNN, simply extract the contents of your cuDNN downloaded zip-file into the install folder of CUDA, which by default should be **C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\vX.X**. When prompted, select to replace existing files.
+
+![image](https://user-images.githubusercontent.com/5618925/183267604-eaf6d9c1-3c9e-408e-abb9-12d79284c2ad.png)
+
 
 ## **Step 3 - Start creating your dataset**
 
