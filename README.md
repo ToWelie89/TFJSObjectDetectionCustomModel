@@ -165,7 +165,7 @@ and that cuDNN is loaded
 
 This means CUDA and cuDNN is configured correctly. Another easy way to check is to simply watch your GPU load in the Performance tab in Task Manager, it should be close to 100%.
 
-![image](https://user-images.githubusercontent.com/5618925/183269363-00bf8ecb-afcc-41f5-98b4-44f96de66985.png)
+![image](https://user-images.githubusercontent.com/5618925/183269482-cbbe8cae-5444-419d-9b2d-7625487a0485.png)
 
 You may now close the script with CTRL+C.
 
