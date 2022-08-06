@@ -21,10 +21,25 @@ use a windows computer, however linux could also use this tutorial
 
 ## **Step 1 - Setup the environment**
 
-1.1 Open up your Anaconda prompt and start it as administrator
+Open up your Anaconda prompt and start it as administrator
 
 ![image](https://user-images.githubusercontent.com/5618925/183266926-5da658db-a195-40ea-a75e-fe56527da97e.png)
 
+Create a conda environment, this will be like a separated container that contains its own dependencies. Give it name like "myenv"
+```bash
+conda create --name myenv
+```
+Now activate your environment
+
+```bash
+conda activate myenv
+```
+You are now inside the "myenv" environment. If you would happen to close your Anaconda prompt, next time you open it up you must remember to once again activate your myenv environment before you do anything else.
+
+Now install tensorflow
+```bash
+pip install tensorflow
+```
 
 intall miniconda
 create a conda enviroment
@@ -33,9 +48,17 @@ conda activate myenv
 
 ## **Step 2 - Configure CUDA and cuDNN**
 
-**Training a machine learning model is a very resource intensive process that ideally requires a strong computer. This is why many perform this operation on a remote machine that is specifically equipped to handle these demanding operations. However in this tutorial we will do everything on the local computer, without any cloud services. It is generally recommended to perform the training phase using a GPU (graphics card). If you do not have a dedicated graphics card on your computer (or simply feeling lazy and don't want to do this step) you can simply skip this step and go to [step 3](#step-3---start-creating-your-dataset), because it is possible to just use your CPU, but it is slower and not ideal. If you do have a GPU however you can follow the these instructions setup your computer so that it is ready to train models using a GPU.**
+**Training a machine learning model is a very resource intensive process that ideally requires a strong computer. This is why many perform this operation on a remote machine that is specifically equipped to handle these demanding operations. However in this tutorial we will do everything on the local computer, without any cloud services. It is generally recommended to perform the training phase using a GPU (graphics card). This tutorial is targeted towards using an Nvidia graphics card, which is why I use CUDA and cuDNN, which are Nvidia technologies. AMD have launched an equivalent technology called GPUFORT, but I have no experience with this. If you do not have a dedicated Nvidia graphics card on your computer (or simply feeling lazy and don't want to do this step) you can simply skip this step and go to [step 3](#step-3---start-creating-your-dataset), because it is possible to just use your CPU, but it is slower and not ideal. If you do have an Nvidia GPU however you can follow the these instructions setup your computer so that it is ready to train models using an Nvidia GPU.**
 
 *Some information; CUDA (or Compute Unified Device Architecture) is a parallel computing platform and application programming interface (API) that allows software to use certain types of graphics processing units (GPUs) for general purpose processing, an approach called general-purpose computing on GPUs. cuDNN (CUDA Deep Neural Network library) on the other hand is a GPU-accelerated library of primitives for deep neural networks. To setup our environment we will need both CUDA and cuDNN.*
+
+Before you get started, make sure you have the latest drivers for your GPU. I like keeping my drivers up to date with [GeForce Experience](https://www.nvidia.com/sv-se/geforce/geforce-experience/)
+
+First you must find out which version of tensorflow you are using. Run
+```bash
+pip list tensorflow
+```
+Look up tensorflow and see its version. For me it is 2.9.1. Then go to [this](https://www.tensorflow.org/install/source_windows#gpu) page. Here you can see which version of CUDA and cuDNN that are compatible with your 
 
 ## **Step 3 - Start creating your dataset**
 
