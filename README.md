@@ -6,18 +6,23 @@ TensorFlow is an end-to-end open source platform for machine learning. It has a 
 
 In this tutorial I will instruct you how to setup your environment from scratch so that you can create a custom object detection model, train it and then convert it into a format that you can use with plain Javascript.
 
+### Who is this tutorial for?
+
+This tutorial is for complete beginners who are new to machine learning and Tensorflow. This tutorial will instruct you to run some Python scripts, but you don't actually need to know Python because the scripts have already been pre-written. This tutorial is written with Windows in mind, but you could follow these steps on a Linux computer as well, even though you would have to modify some instructions for Linux.
+
 ## **Result**
 
 TODO
 
 ## Prerequisites
 
-Download and install Anaconda Python from [here](https://www.anaconda.com/products/distribution). Anaconda is a python runtime that allows you to create separate environments each with their own dependencies. Make sure you check this box to add Anaconda to your PATH variable.
+1. Download and install Anaconda Python from [here](https://www.anaconda.com/products/distribution). Anaconda is a python runtime that allows you to create separate environments each with their own dependencies. Make sure you check this box to add Anaconda to your PATH variable.
 
 ![image](https://user-images.githubusercontent.com/5618925/183266721-55589cee-9e5b-4331-a1ff-6af87fb3b7d8.png)
 
-have node and git installed
-use a windows computer, however linux could also use this tutorial
+2. Make sure that you have [Node](https://nodejs.org/en/) installed. This will be used in the final steps of the tutorial.
+
+3. Also make sure you have [Git for Windows](https://gitforwindows.org/).
 
 ## **Step 1 - Setup the environment**
 
@@ -43,6 +48,7 @@ pip install tensorflow
 
 ## **Step 2 - Configure CUDA and cuDNN (optional but recommended)**
 
+**DO NOTE:**
 **Training a machine learning model is a very resource intensive process that ideally requires a strong computer. This is why many perform this operation on a remote machine that is specifically equipped to handle these demanding operations. However in this tutorial we will do everything on the local computer, without any cloud services. It is generally recommended to perform the training phase using a GPU (graphics card). This tutorial is targeted towards using an Nvidia graphics card, which is why I use CUDA and cuDNN, which are Nvidia technologies. AMD have launched an equivalent technology called GPUFORT, but I have no experience with this. If you do not have a dedicated Nvidia graphics card on your computer (or simply feeling lazy and don't want to do this step) you can simply skip this step and go to [step 3](#step-3---start-creating-your-dataset), because it is possible to just use your CPU, but it is slower and not ideal. If you do have an Nvidia GPU however you can follow the these instructions setup your computer so that it is ready to train models using an Nvidia GPU.**
 
 *Some information; CUDA (or Compute Unified Device Architecture) is a parallel computing platform and application programming interface (API) that allows software to use certain types of graphics processing units (GPUs) for general purpose processing, an approach called general-purpose computing on GPUs. cuDNN (CUDA Deep Neural Network library) on the other hand is a GPU-accelerated library of primitives for deep neural networks. To setup our environment we will need both CUDA and cuDNN.*
